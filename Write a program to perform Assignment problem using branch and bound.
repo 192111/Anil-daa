@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <limits.h>
+
+#define N 4
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int findMinCost(int cost[N][N], bool assigned[N], int worker, int assignment) {
+    int minCost = INT_MAX;
+    for (int task = 0; task < N; task++) {
+        if (!assigned[task] && cost[worker][task] < minCost) {
+            minCost = cost[worker][task];
+            assignment = task;
+        }
+    }
+    return assignment;
+}
+
+void assignTask(int cost[N][N]) {
+    int totalCost = 0;
+    int assignment[N];
+    bool assigned[N];
+
+    for (int i = 0; i < N; i++) {
+        assignment[i] = -1;
+        assigned[i] = false;
+    }
+
+    for (int worker = 0; worker < N; worker++) {
+        int task = findMinCost(cost, assigned, worker, assignment[worker]);
+        assignment[worker] = task;
+        assigned[task] = true;
+        totalCost += cost[worker][task];
+    }
+
+    printf("Assigned tasks:\n");
+    for (int i = 0; i < N; i++) {
+        printf("Worker %d -> Task %d\n", i, assignment[i]);
+    }
+
+    printf("Total cost: %d\n", totalCost);
+}
+
+int main() {
+    int cost[N][N] = {
+        {9, 2, 7, 8},
+        {6, 4, 3, 7},
+        {5, 8, 1, 8},
+        {7, 6, 9, 4}
+    };
+
+    assignTask(cost);
+
+    return 0;
+}
+￼Enter
