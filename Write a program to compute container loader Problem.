@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+#define NUM_ITEMS 6
+#define BIN_CAPACITY 10
+
+void firstFitDecreasing(int items[], int numItems, int binCapacity) {
+    int bins[numItems]; // Array to store the bin number for each item
+    int binCount = 0;
+
+    // Sort items in decreasing order
+    for (int i = 0; i < numItems; i++) {
+        int maxIndex = i;
+        for (int j = i + 1; j < numItems; j++) {
+            if (items[j] > items[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+        // Swap items[i] and items[maxIndex]
+        int temp = items[i];
+        items[i] = items[maxIndex];
+        items[maxIndex] = temp;
+    }
+
+    // Initialize bins and pack items
+    for (int i = 0; i < numItems; i++) {
+        int j;
+        for (j = 0; j < binCount; j++) {
+            if (bins[j] >= items[i]) {
+                bins[j] -= items[i];
+                break;
+            }
+        }
+        if (j == binCount) {
+            bins[binCount] = binCapacity - items[i];
+            binCount++;
+        }
+    }
+
+    // Print the packing result
+    printf("Number of bins needed: %d\n", binCount);
+    printf("Items in each bin:\n");
+    for (int i = 0; i < binCount; i++) {
+        printf("Bin %d: %d\n", i + 1, binCapacity - bins[i]);
+    }
+}
+
+int main() {
+    int items[NUM_ITEMS] = {8, 4, 2, 6, 7, 3};
+
+    firstFitDecreasing(items, NUM_ITEMS, BIN_CAPACITY);
+
+    return 0;
+}
+￼Enter
