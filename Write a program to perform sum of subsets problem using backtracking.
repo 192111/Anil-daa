@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// Function to print the subset
+void printSubset(int subset[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", subset[i]);
+    }
+    printf("\n");
+}
+
+// Recursive function to find all subsets with the given sum
+void subsetSum(int set[], int n, int sum, int currentSum, int index, int subset[], int subsetSize) {
+    if (currentSum == sum) {
+        printSubset(subset, subsetSize);
+        return;
+    }
+
+    // If the current sum exceeds the given sum or if we have reached the end of the array
+    if (currentSum > sum || index >= n)
+        return;
+
+    // Include the current element in the subset
+    subset[subsetSize] = set[index];
+    subsetSum(set, n, sum, currentSum + set[index], index + 1, subset, subsetSize + 1);
+
+    // Exclude the current element from the subset
+    subsetSum(set, n, sum, currentSum, index + 1, subset, subsetSize);
+}
+
+// Function to initialize the subset sum function
+void findSubsets(int set[], int n, int sum) {
+    int subset[n];
+    subsetSum(set, n, sum, 0, 0, subset, 0);
+}
+
+int main() {
+    int set[] = { 10, 7, 5, 18, 12, 20, 15 };
+    int n = sizeof(set) / sizeof(set[0]);
+    int sum = 35;
+
+    printf("Subsets with sum %d:\n", sum);
+    findSubsets(set, n, sum);
+
+    return 0;
+}
