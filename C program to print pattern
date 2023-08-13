@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+void printPattern(int n) {
+    // Print upper triangular pattern
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            printf("%d ", j);
+        }
+        printf("\n");
+    }
+
+    // Print lower triangular pattern
+    for (int i = n - 1; i >= 1; i--) {
+        for (int j = 1; j <= i; j++) {
+            printf("%d ", j);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter a positive integer (n): ");
+    scanf("%d", &n);
+
+    if (n <= 0) {
+        printf("Invalid input. Please enter a positive integer.\n");
+    } else {
+        printPattern(n);
+    }
+
+    return 0;
+}
+￼Enter
