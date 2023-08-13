@@ -1,0 +1,21 @@
+def sieve_of_eratosthenes(n):
+    # Create a boolean list "is_prime[0:n+1]" and initialize all entries as True
+    is_prime = [True] * (n + 1)
+    p = 2
+    while p * p <= n:
+        # If is_prime[p] is still True, then it is a prime
+        if is_prime[p]:
+            # Update all multiples of p to False
+            for i in range(p * p, n + 1, p):
+                is_prime[i] = False
+        p += 1
+
+    # Generate the list of prime numbers
+    primes = [p for p in range(2, n + 1) if is_prime[p]]
+    return primes
+
+# Example usage:
+lower_limit = 2
+upper_limit = 100
+prime_numbers = sieve_of_eratosthenes(upper_limit)
+print("Prime numbers between", lower_limit, "and", upper_limit, "are:", prime_numbers)
