@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Item {
+    int value;
+    int weight;
+};
+
+// Function to compare items based on their value-to-weight ratio (descending order)
+int compare(const void *a, const void *b) {
+    double ratioA = (double)(((struct Item *)a)->value) / ((struct Item *)a)->weight;
+    double ratioB = (double)(((struct Item *)b)->value) / ((struct Item *)b)->weight;
+
+    if (ratioA < ratioB)
+        return 1;
+    if (ratioA > ratioB)
+        return -1;
+    return 0;
+}
+
+// Function to find the maximum value that can be obtained using the greedy approach
+double knapsackGreedy(struct Item items[], int n, int capacity) {
+    // Sort items based on value-to-weight ratio in descending order
+    qsort(items, n, sizeof(struct Item), compare);
+
+    double totalValue = 0.0;
+    int currentWeight = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (currentWeight + items[i].weight <= capacity) {
+            // Take the entire item since it fits
+            currentWeight += items[i].weight;
+            totalValue += items[i].value;
+        } else {
+            // Take a fraction of the item to fill the knapsack
+            int remainingWeight = capacity - currentWeight;
+            totalValue += (double)remainingWeight * items[i].value / items[i].weight;
+            break;
+        }
+    }
+
+    return totalValue;
+}
+
+int main() {
+    struct Item items[] = {{60, 10}, {100, 20}, {120, 30}};
+    int n = sizeof(items) / sizeof(items[0]);
+    int capacity = 50;
+
+    double result = knapsackGreedy(items, n, capacity);
+    printf("Maximum value that can be obtained: %.2lf\n", result);
+
+    return 0;
+}
+￼Enter
