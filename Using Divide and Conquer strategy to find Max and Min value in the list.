@@ -1,0 +1,25 @@
+def find_max_min(arr, start, end):
+    # Base case: if the list has only one element
+    if start == end:
+        return arr[start], arr[start]
+    
+    # If the list has two elements, compare and return
+    if end - start == 1:
+        if arr[start] < arr[end]:
+            return arr[end], arr[start]
+        else:
+            return arr[start], arr[end]
+
+    # Divide the list into two halves
+    mid = (start + end) // 2
+    max_left, min_left = find_max_min(arr, start, mid)
+    max_right, min_right = find_max_min(arr, mid + 1, end)
+    
+    # Combine the results
+    return max(max_left, max_right), min(min_left, min_right)
+
+# Example usage:
+arr = [3, 1, 5, 9, 2, 7]
+max_val, min_val = find_max_min(arr, 0, len(arr) - 1)
+print("Maximum value:", max_val)
+print("Minimum value:", min_val)
