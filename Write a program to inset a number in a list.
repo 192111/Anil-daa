@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insert(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = (*head);
+    (*head) = newNode;
+}
+
+void display(struct Node* head) {
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    // Insert elements into the list
+    insert(&head, 5);
+    insert(&head, 10);
+    insert(&head, 15);
+
+    printf("List after inserting elements: ");
+    display(head);
+
+    return 0;
+}
+￼Enter
